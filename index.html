@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>ToDo List JS</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: white;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .App {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .NavBar {
+            padding: 3%;
+            background-color: rgb(167, 224, 165);
+            border-bottom: 2px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-flow: row wrap;
+        }
+        
+        .SideBar {
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            background-color: rgb(238, 238, 238);
+            background-color: rgba(238, 238, 238, 0.6);
+            border-right: 1px solid #555;
+            left: -36%;
+            bottom: 0;
+            width: 35%;
+            height: 100vh;
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .NavBarActions {
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: space-between;
+            margin-bottom: 20%;
+        }
+        
+        .Icon {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .MainContainer {
+            display: flex;
+            flex-flow: column wrap;
+            margin: 3%;
+        }
+        
+        /* Default Creator style */
+        .CreateNoteContainer {
+            padding: 3% 5%;
+            background-color: rgb(167, 224, 165);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px;
+        }
+        
+        .NoteActionButtons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .TapInput {
+            border: none;
+            border-bottom: 1px solid #666;
+            background: none;
+            outline: none;
+        }
+        
+        /* Note Creator Style */
+        .CreateNoteExtendedContainer {
+            display: none;
+            flex-direction: column;
+            background-color: rgb(167, 224, 165);
+            padding: 5% 5%;
+            border-radius: 12px;
+        }
+        
+        .NoteTitle {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .NoteDescription {
+            margin: 20px 0;
+            padding: 5px;
+            border-radius: 3px;
+            background-color: white;
+            line-height: 1.2em;
+            height: 5em;
+            overflow: hidden;
+        }
+        
+        .Tags {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .tagInput {
+            width: 90px;
+        }
+        
+        .NoteBottomTab {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ColorsContainer {
+            flex: 1;
+            display: flex;
+        }
+        
+        .color {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            margin-left: 3%;
+        }
+        
+        .NotesContainer {
+            padding: 3% 5%;
+        }
+        
+        .Note {
+            background-color: rgb(167, 224, 165);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 2px 2px #aaa;
+            margin-bottom: 2%;
+        }
+        
+        .NoteMain {
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: space-between;
+        }
+        
+        .NoteTags {
+            display: flex;
+            flex-flow: row wrap;
+            margin-bottom: 2%;
+        }
+        
+        .tagInput:focus {
+            outline: none;
+        }
+        
+        .tagElement {
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 2px;
+            background-color: rgb(241, 236, 236);
+        }
+        
+        .NoteActionArea {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        
+        
+        /* Check List Creator style */
+        .CreateCheckListContainer {
+            display: none;
+            flex-direction: column;
+            background-color: #ccc;
+            padding: 3% 3%;
+            border-radius: 12px;
+        }
+        
+        .CheckListContainer {
+            display: flex;
+            flex-flow: column wrap;
+            margin: 20px 0;
+        }
+        
+        .CheckListItem {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkListInput {
+            padding: 2px;
+        }
+        .checkListInput:focus{
+            outline: none;
+        }
+        
+        .CheckListBottomTab {
+            align-self: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+        }
+        
+        .Button {
+            padding: 5px;
+            background: none;
+            border-radius: 5px;
+            outline: none;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    <script src="script.js"></script>
+</head>
+
+<body>
+	<div class="App">
+
+		<div class="NavBar">
+			<span class="Icon" onclick="toggleSideBar()">
+				<img src="https://img.icons8.com/ios/2x/menu-filled.png" width="100%" height="100%" />
+			</span>
+			<span style="margin-right: 10%">ToDo List!</span>
+			<div class="SideBar">
+				<div class="NavBarActions">
+					<h1>Demo Side Bar</h1>
+					<button>Option1</button>
+					<button style="margin: 10% 0">Option2</button>
+					<button>Option...n</button>
+				</div>
+				<button onclick="toggleSideBar()">
+					 Close</button> 
+			</div>
+		</div>
+
+		<div class="MainContainer">
+
+			<div class="CreateNoteContainer">
+				<div class="Tap">
+					<input class="TapInput" type="text" placeholder="Tap to take a note..." onclick="toggleNoteCreater()" />
+				</div>
+				<span class="Icon" onclick="toggleCheckListCreater()">
+					<img src="https://img.icons8.com/ios/2x/test-passed.png" width="100%" height="100%" />
+				</span>
+			</div>
+
+			<div class="CreateNoteExtendedContainer">
+				<div class="NoteTitle">
+					<input class="TapInput" id="noteTitle" maxlength="20" type="text" placeholder="Untitled" />
+					<input type="date" id="dateInput" onchange="dateChangedHandler()" />
+				</div>
+				<div class="NoteDescription" contenteditable="true" aria-multiline="true" role="textbox" autofocus></div>
+				<div class="Tags">
+					<span> #<input type="text" maxlength="14" class="tagInput" /> </span>
+					<span> #<input type="text" maxlength="14" class="tagInput" /> </span>
+					<span> #<input type="text" maxlength="14" class="tagInput" /> </span>
+				</div>
+				<div class="NoteBottomTab">
+					<div class="ColorsContainer">
+						<span class="color" style="background-color: rgb(167, 224, 165)" onclick="changeColor('green')"></span>
+						<span class="color" style="background-color: rgb(255, 255, 122)" onclick="changeColor('yellow')"></span>
+						<span class="color" style="background-color: rgb(250, 116, 112)" onclick="changeColor('red')"></span>
+					</div>
+					<div class="NoteActionButtons">
+						<button class="Button" onclick="cancelNote()">
+							<img src="https://www.ecommerce.expert/wp-content/uploads/cancel-icon-by-flat-icon.png" style="height: 25px; width: 25px; margin-right: 10px" />
+							Cancel
+						</button>
+						<button class="Button" onclick="saveNote()">
+							Save!
+							<img src="https://www.freeiconspng.com/minicovers/green-tick-icon-0.png" style="height: 25px; width: 25px; margin-left: 10px" />
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="CreateCheckListContainer">
+				<div class="NoteTitle">
+					<input class="TapInput" id="checkTitle" type="text" placeholder="Untitled" />
+					<input type="date" id="dateInput" onchange="dateChangedHandler()" />
+				</div>
+				<div class="CheckListContainer">
+					<div class="CheckListItem">
+						<input type="text" maxlength="20" class="checkListInput" />
+						<span class="Icon" onclick="addListItem()">
+							<img src="https://www.freeiconspng.com/minicovers/add-item-icon-insert-black-plus-new-7.png"
+								style="height: 50%; width: 50%; margin-left: 15px" />
+						</span>
+					</div>
+				</div>
+				<div class="CheckListBottomTab">
+					<button class="Button" onclick="cancelCheck()">
+						<span class="Icon" >
+							<img src="https://www.ecommerce.expert/wp-content/uploads/cancel-icon-by-flat-icon.png" style="height: 80%; width: 80%" />
+						</span>
+						Cancel
+					</button>
+					<button class="Button" onclick="saveCheckList()">
+						Create
+						<span class="Icon" >
+							<img src="https://www.freeiconspng.com/minicovers/green-tick-icon-0.png" style="height: 80%; width: 80%" />
+						</span>
+					</button>
+				</div>
+			</div>
+			<div class="NotesContainer"></div>
+		</div>
+
+	</div>
+</body>
+
+</html>
